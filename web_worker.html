@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Web Worker Example</title>
+</head>
+<body>
+
+<h1>Web Worker Example</h1>
+
+<div id="results"></div>
+
+<button id="startWorker">Start Worker</button>
+<button id="stopWorker">Stop Worker</button>
+
+<script>
+
+// Check for web worker support
+if (typeof Worker !== "undefined") {
+
+  // Create a web worker
+  var worker = new Worker("worker.js");
+
+  // Set up event handlers
+  worker.onmessage = function(event) {
+    document.getElementById("results").innerHTML = event.data;
+  };
+
+  // Start the worker
+  worker.postMessage("start");
+
+} else {
+
+  // No web worker support
+  document.getElementById("results").innerHTML = "Web worker support not available.";
+
+}
+
+// Start worker button handler
+document.getElementById("startWorker").onclick = function() {
+
+  if (typeof Worker !== "undefined") {
+
+    // Start the worker
+    worker.postMessage("start");
+
+  }
+
+};
+
+// Stop worker button handler
+document.getElementById("stopWorker").onclick = function() {
+
+  if (typeof Worker !== "undefined") {
+
+    // Stop the worker
+    worker.postMessage("stop");
+
+  }
+
+};
+
+</script>
+
+</body>
+</html>
